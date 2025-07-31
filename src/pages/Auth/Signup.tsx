@@ -41,15 +41,12 @@ const Signup: React.FC = () => {
     }
 
     try {
-      const success = await signup(formData.name, formData.email, formData.password);
-      if (success) {
-        toast.success('Account created successfully! Welcome to BroCode!');
-        navigate('/');
-      } else {
-        toast.error('Failed to create account. Please try again.');
-      }
-    } catch (error) {
-      toast.error('Signup failed. Please try again.');
+      await signup(formData.name, formData.email, formData.password);
+      toast.success('Account created successfully! Welcome to BroCode!');
+      navigate('/');
+    } catch (error: any) {
+      console.error('Signup error:', error);
+      toast.error(error.message || 'Failed to create account. Please try again.');
     }
   };
 
@@ -68,26 +65,26 @@ const Signup: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center px-4">
+    <div className="min-h-screen bg-black flex items-center justify-center px-4 py-8">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="max-w-md w-full"
+        className="max-w-sm sm:max-w-md w-full"
       >
-        <div className="bg-gray-900 rounded-2xl p-8 shadow-2xl">
+        <div className="bg-gray-900 rounded-xl sm:rounded-2xl p-6 sm:p-8 shadow-2xl">
           {/* Logo */}
-          <div className="text-center mb-8">
-            <div className="flex justify-center mb-4">
+          <div className="text-center mb-6 sm:mb-8">
+            <div className="flex justify-center mb-3 sm:mb-4">
               <Logo size="lg" showTagline={false} />
             </div>
-            <h1 className="text-3xl font-bold text-white mb-2">Join BroCode</h1>
-            <p className="text-gray-400">Create your account and start ordering</p>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Join BroCode</h1>
+            <p className="text-gray-400 text-sm sm:text-base">Create your account and start ordering</p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
             {/* Name */}
             <div>
-              <label htmlFor="name" className="block text-white font-medium mb-2">
+              <label htmlFor="name" className="block text-white font-medium mb-1.5 sm:mb-2 text-sm sm:text-base">
                 Full Name
               </label>
               <input
@@ -96,19 +93,19 @@ const Signup: React.FC = () => {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className={`w-full bg-gray-800 text-white px-4 py-3 rounded-lg border ${
+                className={`w-full bg-gray-800 text-white px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg border ${
                   errors.name ? 'border-red-500' : 'border-gray-700'
-                } focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 outline-none transition-colors`}
+                } focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 outline-none transition-colors text-sm sm:text-base`}
                 placeholder="Enter your full name"
               />
               {errors.name && (
-                <p className="text-red-500 text-sm mt-1">{errors.name}</p>
+                <p className="text-red-500 text-xs sm:text-sm mt-1">{errors.name}</p>
               )}
             </div>
 
             {/* Email */}
             <div>
-              <label htmlFor="email" className="block text-white font-medium mb-2">
+              <label htmlFor="email" className="block text-white font-medium mb-1.5 sm:mb-2 text-sm sm:text-base">
                 Email Address
               </label>
               <input
@@ -117,19 +114,19 @@ const Signup: React.FC = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className={`w-full bg-gray-800 text-white px-4 py-3 rounded-lg border ${
+                className={`w-full bg-gray-800 text-white px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg border ${
                   errors.email ? 'border-red-500' : 'border-gray-700'
-                } focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 outline-none transition-colors`}
+                } focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 outline-none transition-colors text-sm sm:text-base`}
                 placeholder="Enter your email"
               />
               {errors.email && (
-                <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+                <p className="text-red-500 text-xs sm:text-sm mt-1">{errors.email}</p>
               )}
             </div>
 
             {/* Password */}
             <div>
-              <label htmlFor="password" className="block text-white font-medium mb-2">
+              <label htmlFor="password" className="block text-white font-medium mb-1.5 sm:mb-2 text-sm sm:text-base">
                 Password
               </label>
               <div className="relative">
@@ -139,31 +136,31 @@ const Signup: React.FC = () => {
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
-                  className={`w-full bg-gray-800 text-white px-4 py-3 rounded-lg border ${
+                  className={`w-full bg-gray-800 text-white px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg border ${
                     errors.password ? 'border-red-500' : 'border-gray-700'
-                  } focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 outline-none transition-colors`}
+                  } focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 outline-none transition-colors text-sm sm:text-base`}
                   placeholder="Create a password (min 6 characters)"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-3 text-gray-400 hover:text-white"
+                  className="absolute right-2.5 sm:right-3 top-2.5 sm:top-3 text-gray-400 hover:text-white"
                 >
                   {showPassword ? (
-                    <EyeSlashIcon className="h-5 w-5" />
+                    <EyeSlashIcon className="h-4 w-4 sm:h-5 sm:w-5" />
                   ) : (
-                    <EyeIcon className="h-5 w-5" />
+                    <EyeIcon className="h-4 w-4 sm:h-5 sm:w-5" />
                   )}
                 </button>
               </div>
               {errors.password && (
-                <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+                <p className="text-red-500 text-xs sm:text-sm mt-1">{errors.password}</p>
               )}
             </div>
 
             {/* Confirm Password */}
             <div>
-              <label htmlFor="confirmPassword" className="block text-white font-medium mb-2">
+              <label htmlFor="confirmPassword" className="block text-white font-medium mb-1.5 sm:mb-2 text-sm sm:text-base">
                 Confirm Password
               </label>
               <div className="relative">
@@ -173,25 +170,25 @@ const Signup: React.FC = () => {
                   name="confirmPassword"
                   value={formData.confirmPassword}
                   onChange={handleChange}
-                  className={`w-full bg-gray-800 text-white px-4 py-3 rounded-lg border ${
+                  className={`w-full bg-gray-800 text-white px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg border ${
                     errors.confirmPassword ? 'border-red-500' : 'border-gray-700'
-                  } focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 outline-none transition-colors`}
+                  } focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 outline-none transition-colors text-sm sm:text-base`}
                   placeholder="Confirm your password"
                 />
                 <button
                   type="button"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="absolute right-3 top-3 text-gray-400 hover:text-white"
+                  className="absolute right-2.5 sm:right-3 top-2.5 sm:top-3 text-gray-400 hover:text-white"
                 >
                   {showConfirmPassword ? (
-                    <EyeSlashIcon className="h-5 w-5" />
+                    <EyeSlashIcon className="h-4 w-4 sm:h-5 sm:w-5" />
                   ) : (
-                    <EyeIcon className="h-5 w-5" />
+                    <EyeIcon className="h-4 w-4 sm:h-5 sm:w-5" />
                   )}
                 </button>
               </div>
               {errors.confirmPassword && (
-                <p className="text-red-500 text-sm mt-1">{errors.confirmPassword}</p>
+                <p className="text-red-500 text-xs sm:text-sm mt-1">{errors.confirmPassword}</p>
               )}
             </div>
 
@@ -199,15 +196,15 @@ const Signup: React.FC = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-yellow-400 text-black font-semibold py-3 rounded-lg hover:bg-yellow-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+              className="w-full bg-yellow-400 text-black font-semibold py-2.5 sm:py-3 rounded-lg hover:bg-yellow-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center text-sm sm:text-base"
             >
               {isLoading ? <LoadingSpinner size="sm" /> : 'Create Account'}
             </button>
           </form>
 
           {/* Sign In Link */}
-          <div className="text-center mt-6">
-            <p className="text-gray-400">
+          <div className="text-center mt-4 sm:mt-6">
+            <p className="text-gray-400 text-sm sm:text-base">
               Already have an account?{' '}
               <Link
                 to="/login"

@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { MagnifyingGlassIcon, ShoppingCartIcon } from '@heroicons/react/24/outline';
 import { motion } from 'framer-motion';
-import { MagnifyingGlassIcon, TruckIcon, ClockIcon, ShieldCheckIcon } from '@heroicons/react/24/outline';
+import { categories, mockProducts } from '../data/mockData';
 import ProductCard from '../components/Common/ProductCard';
-import Logo from '../components/Common/Logo';
-import { mockProducts, categories } from '../data/mockData';
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
@@ -19,12 +18,6 @@ const Home: React.FC = () => {
 
   const featuredProducts = mockProducts.slice(0, 6);
 
-  const offers = [
-    "🔥 Get 20% OFF on orders above ₹500 | Code: BROCODE20",
-    "⚡ Free delivery on orders above ₹300",
-    "🎉 New user? Get ₹50 OFF on first order | Code: NEW50"
-  ];
-
   return (
     <div className="min-h-screen bg-black">
       {/* Scrolling Offers Banner */}
@@ -32,201 +25,243 @@ const Home: React.FC = () => {
         <motion.div
           animate={{ x: ['100%', '-100%'] }}
           transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-          className="whitespace-nowrap"
+          className="whitespace-nowrap text-sm"
         >
-          {offers.join(' • ')}
+          🎉 Code: BROCODE20 • ⚡ Free delivery on orders above ₹300 • 🎊 New user? Get ₹50 OFF on first order | Code: NEW50 • 🎉 Code: BROCODE20 • ⚡ Free delivery on orders above ₹300 • 🎊 New user? Get ₹50 OFF on first order | Code: NEW50
         </motion.div>
       </div>
 
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-black via-gray-900 to-black min-h-[80vh] flex items-center">
-        <div className="absolute inset-0 bg-black/50"></div>
-        <div 
-          className="absolute inset-0 bg-cover bg-center opacity-20"
-          style={{
-            backgroundImage: "url('https://images.pexels.com/photos/681847/pexels-photo-681847.jpeg?auto=compress&cs=tinysrgb&w=1920')"
-          }}
-        ></div>
-        
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center"
+      {/* Hero Section with Video Background */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        {/* Video Background */}
+        <div className="absolute inset-0 z-0">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover"
+            style={{ filter: 'brightness(0.8) contrast(1.2) saturate(1.3)' }}
           >
-            <motion.div
-              initial={{ scale: 0.8 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="mb-8"
-            >
-              <h1 className="text-6xl md:text-8xl font-bold text-white mb-4 text-center">
-                <span className="bg-gradient-to-r from-orange-400 via-yellow-400 to-orange-500 bg-clip-text text-transparent">BROCODE</span>
-              </h1>
-              <p className="text-2xl md:text-3xl text-gray-300 font-medium mb-8 text-center">
-                Daaru Aur Chakna, Ek Click Mein Apna
-              </p>
-            </motion.div>
+            <source src="/9535-220799447.mp4" type="video/mp4" />
+            {/* Fallback for browsers that don't support video */}
+            <div className="w-full h-full bg-gradient-to-br from-amber-900 via-orange-800 to-red-900"></div>
+          </video>
+          
+          {/* Lighter overlay for better video visibility */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/30"></div>
+          
+          {/* Minimal overlay for text readability */}
+          <div className="absolute inset-0 bg-black/20"></div>
+        </div>
 
-            {/* Search Bar */}
-            <motion.form
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              onSubmit={handleSearch}
-              className="max-w-2xl mx-auto mb-12"
-            >
-              <div className="relative">
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search for your favorite drinks & snacks..."
-                  className="w-full bg-white/10 backdrop-blur-sm text-white px-6 py-4 pl-12 rounded-2xl border border-white/20 focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/50 outline-none text-lg placeholder-gray-300"
-                />
-                <MagnifyingGlassIcon className="absolute left-4 top-4 h-6 w-6 text-gray-300" />
-                <button
-                  type="submit"
-                  className="absolute right-2 top-2 bg-yellow-400 text-black px-6 py-2 rounded-xl font-semibold hover:bg-yellow-500 transition-colors"
-                >
-                  Search
-                </button>
+        {/* Hero Content */}
+        <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto pt-4 sm:pt-6">
+          <div>
+            {/* Professional Badge - Moved Higher */}
+            <div className="mb-6 sm:mb-8">
+              <div className="inline-flex items-center space-x-2 bg-yellow-400/20 backdrop-blur-sm border border-yellow-400/30 rounded-full px-4 py-2 text-yellow-400 text-sm font-medium shadow-lg shadow-yellow-400/20">
+                <span className="w-2 h-2 bg-yellow-400 rounded-full"></span>
+                <span>Premium Beverage Delivery</span>
+                <span className="w-2 h-2 bg-yellow-400 rounded-full"></span>
               </div>
-            </motion.form>
+            </div>
+
+            {/* Main Title */}
+            <div className="mb-4 sm:mb-6">
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold">
+                <span className="bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 bg-clip-text text-transparent drop-shadow-2xl">
+                  BROCODE
+                </span>
+              </h1>
+            </div>
+            
+            <p className="text-white text-xl sm:text-2xl lg:text-3xl mb-8 sm:mb-12 font-medium drop-shadow-lg">
+              Daaru Aur Chakna, Ek Click Mein Apna
+            </p>
+
+            {/* Professional Stats */}
+            <div className="flex justify-center space-x-8 sm:space-x-12 mb-8 sm:mb-12">
+              <div className="text-center">
+                <div className="text-2xl sm:text-3xl font-bold text-yellow-400 drop-shadow-lg">10K+</div>
+                <div className="text-white/70 text-sm sm:text-base">Happy Customers</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl sm:text-3xl font-bold text-yellow-400 drop-shadow-lg">500+</div>
+                <div className="text-white/70 text-sm sm:text-base">Premium Products</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl sm:text-3xl font-bold text-yellow-400 drop-shadow-lg">30min</div>
+                <div className="text-white/70 text-sm sm:text-base">Fast Delivery</div>
+              </div>
+            </div>
 
             {/* CTA Buttons */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              className="flex flex-col sm:flex-row gap-4 justify-center items-center"
-            >
-              <Link
-                to="/products"
-                className="bg-yellow-400 text-black px-8 py-4 rounded-xl font-bold text-lg hover:bg-yellow-500 transition-all transform hover:scale-105 shadow-lg"
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <button
+                onClick={() => navigate('/products')}
+                className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-black px-6 py-3 rounded-xl font-bold text-base transition-all duration-300 flex items-center justify-center space-x-2 shadow-2xl shadow-yellow-400/25 hover:shadow-yellow-400/40 hover:scale-105"
               >
-                🛒 Order Now
-              </Link>
-              <Link
-                to="/products?category=beer"
-                className="bg-white/10 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-semibold text-lg border border-white/20 hover:bg-white/20 transition-all"
+                <ShoppingCartIcon className="h-5 w-5" />
+                <span>Order Now</span>
+              </button>
+              
+              <button
+                onClick={() => navigate('/products?category=beer')}
+                className="bg-white/10 backdrop-blur-sm text-white px-6 py-3 rounded-xl font-bold text-base transition-all duration-300 border border-white/20 flex items-center justify-center space-x-2 shadow-2xl shadow-white/10 hover:bg-white/20 hover:shadow-white/20 hover:scale-105"
               >
-                🍺 Browse Drinks
-              </Link>
-            </motion.div>
-          </motion.div>
+                <span className="text-xl">🍺</span>
+                <span>Browse Drinks</span>
+              </button>
+            </div>
+
+            {/* Trust Indicators */}
+            <div className="mt-8 sm:mt-12 flex justify-center items-center space-x-6 sm:space-x-8">
+              <div className="flex items-center space-x-2 text-white/60 text-sm">
+                <span className="w-3 h-3 bg-green-400 rounded-full"></span>
+                <span>24/7 Available</span>
+              </div>
+              <div className="flex items-center space-x-2 text-white/60 text-sm">
+                <span className="w-3 h-3 bg-blue-400 rounded-full"></span>
+                <span>Secure Payment</span>
+              </div>
+              <div className="flex items-center space-x-2 text-white/60 text-sm">
+                <span className="w-3 h-3 bg-purple-400 rounded-full"></span>
+                <span>Premium Quality</span>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Features */}
-      <section className="py-16 bg-gray-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-8"
-          >
-            <div className="text-center">
-              <div className="w-16 h-16 bg-yellow-400 rounded-full flex items-center justify-center mx-auto mb-4">
-                <TruckIcon className="h-8 w-8 text-black" />
+      {/* Features Section */}
+      <section className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12 sm:mb-16">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">
+              Why Choose <span className="text-yellow-400">BROCODE</span>?
+            </h2>
+            <p className="text-gray-400 text-lg sm:text-xl max-w-3xl mx-auto">
+              Experience the best in online beverage and snack delivery with our premium service
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+            {[
+              {
+                icon: '🚚',
+                title: 'Fast Delivery',
+                description: 'Get your drinks delivered within 30 minutes'
+              },
+              {
+                icon: '🛡️',
+                title: 'Quality Assured',
+                description: 'Premium quality beverages and snacks'
+              },
+              {
+                icon: '💰',
+                title: 'Best Prices',
+                description: 'Competitive prices with great discounts'
+              },
+              {
+                icon: '🎉',
+                title: '24/7 Service',
+                description: 'Order anytime, day or night'
+              }
+            ].map((feature, index) => (
+              <div
+                key={index}
+                className="bg-gray-900 rounded-xl sm:rounded-2xl p-6 sm:p-8 text-center hover:bg-gray-800 transition-colors"
+              >
+                <div className="text-4xl sm:text-5xl mb-4">{feature.icon}</div>
+                <h3 className="text-white font-bold text-lg sm:text-xl mb-2">{feature.title}</h3>
+                <p className="text-gray-400 text-sm sm:text-base">{feature.description}</p>
               </div>
-              <h3 className="text-white font-bold text-xl mb-2">Fast Delivery</h3>
-              <p className="text-gray-400">Get your order delivered in 30 minutes or less</p>
-            </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-yellow-400 rounded-full flex items-center justify-center mx-auto mb-4">
-                <ClockIcon className="h-8 w-8 text-black" />
-              </div>
-              <h3 className="text-white font-bold text-xl mb-2">24/7 Available</h3>
-              <p className="text-gray-400">Order anytime, anywhere. We're always open</p>
-            </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-yellow-400 rounded-full flex items-center justify-center mx-auto mb-4">
-                <ShieldCheckIcon className="h-8 w-8 text-black" />
-              </div>
-              <h3 className="text-white font-bold text-xl mb-2">Premium Quality</h3>
-              <p className="text-gray-400">Only the finest selection of drinks and snacks</p>
-            </div>
-          </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Categories */}
-      <section className="py-16 bg-black">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-4xl font-bold text-white mb-4">Shop by Category</h2>
-            <p className="text-gray-400 text-lg">Discover our premium collection</p>
-          </motion.div>
+      {/* Categories Section */}
+      <section className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-gray-900">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12 sm:mb-16">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">
+              Explore Our <span className="text-yellow-400">Categories</span>
+            </h2>
+            <p className="text-gray-400 text-lg sm:text-xl max-w-3xl mx-auto">
+              Discover a wide variety of beverages and snacks for every occasion
+            </p>
+          </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 sm:gap-6">
             {categories.map((category, index) => (
-              <motion.div
+              <div
                 key={category.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ scale: 1.05 }}
                 className="group cursor-pointer"
               >
                 <Link to={`/products?category=${category.id}`}>
-                  <div className="bg-gray-900 rounded-2xl p-6 text-center hover:bg-gray-800 transition-colors">
-                    <div className={`w-16 h-16 ${category.color} rounded-full flex items-center justify-center mx-auto mb-4 text-3xl`}>
-                      {category.icon}
+                  <div className="bg-gray-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center hover:bg-gray-700 transition-all duration-300 hover:shadow-2xl hover:shadow-yellow-400/20 border border-transparent hover:border-yellow-400/30 hover:scale-105">
+                    <div className={`w-12 h-12 sm:w-16 sm:h-16 ${category.color} rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300 group-hover:shadow-lg`}>
+                      {category.id === 'beer' && (
+                        <span className="text-2xl sm:text-3xl">🍺</span>
+                      )}
+                      {category.id === 'whiskey' && (
+                        <span className="text-2xl sm:text-3xl">🥃</span>
+                      )}
+                      {category.id === 'champagne' && (
+                        <span className="text-2xl sm:text-3xl">🍾</span>
+                      )}
+                      {category.id === 'rum' && (
+                        <span className="text-2xl sm:text-3xl">🏴‍☠️</span>
+                      )}
+                      {category.id === 'tobacco' && (
+                        <span className="text-2xl sm:text-3xl">🚬</span>
+                      )}
+                      {category.id === 'chakna' && (
+                        <span className="text-2xl sm:text-3xl">🍿</span>
+                      )}
                     </div>
-                    <h3 className="text-white font-semibold text-lg">{category.name}</h3>
+                    <h3 className="text-white font-semibold text-sm sm:text-base lg:text-lg group-hover:text-yellow-400 transition-colors duration-300">{category.name}</h3>
                   </div>
                 </Link>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Featured Products */}
-      <section className="py-16 bg-gray-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-4xl font-bold text-white mb-4">Featured Products</h2>
-            <p className="text-gray-400 text-lg">Handpicked favorites just for you</p>
-          </motion.div>
+      {/* Featured Products Section */}
+      <section className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12 sm:mb-16">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">
+              Featured <span className="text-yellow-400">Products</span>
+            </h2>
+            <p className="text-gray-400 text-lg sm:text-xl max-w-3xl mx-auto">
+              Handpicked premium beverages and snacks for you
+            </p>
+          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8">
             {featuredProducts.map((product, index) => (
-              <motion.div
+              <div
                 key={product.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
               >
-                <ProductCard
-                  product={product}
-                  onClick={() => navigate(`/product/${product.id}`)}
-                />
-              </motion.div>
+                <ProductCard product={product} />
+              </div>
             ))}
           </div>
 
-          <div className="text-center mt-12">
+          <div className="text-center mt-12 sm:mt-16">
             <Link
               to="/products"
-              className="bg-yellow-400 text-black px-8 py-3 rounded-lg font-semibold hover:bg-yellow-500 transition-colors inline-block"
+              className="inline-flex items-center space-x-2 bg-yellow-400 text-black px-8 py-3 rounded-xl font-bold text-lg hover:bg-yellow-500 transition-colors"
             >
-              View All Products
+              <span>View All Products</span>
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
             </Link>
           </div>
         </div>

@@ -1,5 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { doc, setDoc, getDoc, onSnapshot } from 'firebase/firestore';
+import { db } from '../firebase';
 import { CartItem, Product } from '../types';
+import { useAuth } from './AuthContext';
 import toast from 'react-hot-toast';
 
 interface CartContextType {
@@ -27,17 +30,44 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [items, setItems] = useState<CartItem[]>([]);
   const [couponDiscount, setCouponDiscount] = useState(0);
   const [appliedCoupon, setAppliedCoupon] = useState<string | null>(null);
+  const { user } = useAuth();
 
+  // Load cart from Firestore when user changes
   useEffect(() => {
-    const savedCart = localStorage.getItem('cart');
-    if (savedCart) {
-      setItems(JSON.parse(savedCart));
+    if (!user) {
+      setItems([]);
+      return;
     }
-  }, []);
 
+    const cartRef = doc(db, 'carts', user.id);
+    const unsubscribe = onSnapshot(cartRef, (doc) => {
+      if (doc.exists()) {
+        const cartData = doc.data();
+        setItems(cartData.items || []);
+        setCouponDiscount(cartData.couponDiscount || 0);
+        setAppliedCoupon(cartData.appliedCoupon || null);
+      } else {
+        setItems([]);
+        setCouponDiscount(0);
+        setAppliedCoupon(null);
+      }
+    });
+
+    return unsubscribe;
+  }, [user]);
+
+  // Save cart to Firestore whenever items change
   useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(items));
-  }, [items]);
+    if (!user) return;
+
+    const cartRef = doc(db, 'carts', user.id);
+    setDoc(cartRef, {
+      items,
+      couponDiscount,
+      appliedCoupon,
+      updatedAt: new Date()
+    }, { merge: true });
+  }, [items, couponDiscount, appliedCoupon, user]);
 
   const addToCart = (product: Product, quantity = 1) => {
     setItems(prev => {
@@ -78,7 +108,6 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setItems([]);
     setCouponDiscount(0);
     setAppliedCoupon(null);
-    localStorage.removeItem('cart');
   };
 
   const applyCoupon = (code: string): boolean => {

@@ -94,17 +94,17 @@ const Products: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black py-8">
+    <div className="min-h-screen bg-black py-6 sm:py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center mb-8">
-          <div className="flex justify-center mb-4">
+        <div className="text-center mb-6 sm:mb-8">
+          <div className="flex justify-center mb-3 sm:mb-4">
             <Logo size="md" showTagline={false} />
           </div>
-          <h1 className="text-3xl font-bold text-white mb-2">
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
             {searchQuery ? `Search Results for "${searchQuery}"` : 'All Products'}
           </h1>
-          <p className="text-gray-400">
+          <p className="text-gray-400 text-sm sm:text-base">
             {filteredProducts.length} product{filteredProducts.length !== 1 ? 's' : ''} found
           </p>
         </div>
@@ -112,14 +112,14 @@ const Products: React.FC = () => {
         <div className="flex justify-end mb-4">
           <button
             onClick={() => setShowFilters(!showFilters)}
-            className="lg:hidden bg-gray-800 text-white px-4 py-2 rounded-lg flex items-center space-x-2"
+            className="lg:hidden bg-gray-800 text-white px-3 sm:px-4 py-2 rounded-lg flex items-center space-x-2 text-sm sm:text-base"
           >
-            <FunnelIcon className="h-5 w-5" />
+            <FunnelIcon className="h-4 w-4 sm:h-5 sm:w-5" />
             <span>Filters</span>
           </button>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-8">
+        <div className="flex flex-col lg:flex-row gap-6 sm:gap-8">
           {/* Filters Sidebar */}
           <motion.div
             initial={false}
@@ -131,9 +131,9 @@ const Products: React.FC = () => {
               showFilters ? 'fixed inset-0 z-50 bg-black/50' : 'hidden'
             } lg:relative lg:bg-transparent`}
           >
-            <div className="bg-gray-900 h-full lg:h-auto lg:rounded-lg p-6 overflow-y-auto">
+            <div className="bg-gray-900 h-full lg:h-auto lg:rounded-lg p-4 sm:p-6 overflow-y-auto">
               {/* Mobile Filter Header */}
-              <div className="lg:hidden flex items-center justify-between mb-6">
+              <div className="lg:hidden flex items-center justify-between mb-4 sm:mb-6">
                 <h2 className="text-white font-semibold text-lg">Filters</h2>
                 <button
                   onClick={() => setShowFilters(false)}
@@ -144,12 +144,12 @@ const Products: React.FC = () => {
               </div>
 
               {/* Sort By */}
-              <div className="mb-6">
-                <h3 className="text-white font-semibold mb-3">Sort By</h3>
+              <div className="mb-4 sm:mb-6">
+                <h3 className="text-white font-semibold mb-2 sm:mb-3 text-sm sm:text-base">Sort By</h3>
                 <select
                   value={filters.sortBy}
                   onChange={(e) => handleFilterChange('sortBy', e.target.value)}
-                  className="w-full bg-gray-800 text-white px-3 py-2 rounded-lg border border-gray-700 focus:border-yellow-400 outline-none"
+                  className="w-full bg-gray-800 text-white px-3 py-2 rounded-lg border border-gray-700 focus:border-yellow-400 outline-none text-sm"
                 >
                   <option value="name">Name (A-Z)</option>
                   <option value="price-low">Price (Low to High)</option>
@@ -159,8 +159,8 @@ const Products: React.FC = () => {
               </div>
 
               {/* Category Filter */}
-              <div className="mb-6">
-                <h3 className="text-white font-semibold mb-3">Category</h3>
+              <div className="mb-4 sm:mb-6">
+                <h3 className="text-white font-semibold mb-2 sm:mb-3 text-sm sm:text-base">Category</h3>
                 <div className="space-y-2">
                   <label className="flex items-center">
                     <input
@@ -171,7 +171,7 @@ const Products: React.FC = () => {
                       onChange={(e) => handleFilterChange('category', e.target.value)}
                       className="text-yellow-400 focus:ring-yellow-400"
                     />
-                    <span className="text-white ml-2">All Categories</span>
+                    <span className="text-white ml-2 text-sm">All Categories</span>
                   </label>
                   {categories.map(category => (
                     <label key={category.id} className="flex items-center">
@@ -183,15 +183,15 @@ const Products: React.FC = () => {
                         onChange={(e) => handleFilterChange('category', e.target.value)}
                         className="text-yellow-400 focus:ring-yellow-400"
                       />
-                      <span className="text-white ml-2">{category.name}</span>
+                      <span className="text-white ml-2 text-sm">{category.name}</span>
                     </label>
                   ))}
                 </div>
               </div>
 
               {/* Price Range Filter */}
-              <div className="mb-6">
-                <h3 className="text-white font-semibold mb-3">Price Range</h3>
+              <div className="mb-4 sm:mb-6">
+                <h3 className="text-white font-semibold mb-2 sm:mb-3 text-sm sm:text-base">Price Range</h3>
                 <div className="space-y-2">
                   <label className="flex items-center">
                     <input
@@ -202,7 +202,7 @@ const Products: React.FC = () => {
                       onChange={(e) => handleFilterChange('priceRange', e.target.value)}
                       className="text-yellow-400 focus:ring-yellow-400"
                     />
-                    <span className="text-white ml-2">Any Price</span>
+                    <span className="text-white ml-2 text-sm">Any Price</span>
                   </label>
                   {priceRanges.map(range => (
                     <label key={range.value} className="flex items-center">
@@ -214,19 +214,19 @@ const Products: React.FC = () => {
                         onChange={(e) => handleFilterChange('priceRange', e.target.value)}
                         className="text-yellow-400 focus:ring-yellow-400"
                       />
-                      <span className="text-white ml-2">{range.label}</span>
+                      <span className="text-white ml-2 text-sm">{range.label}</span>
                     </label>
                   ))}
                 </div>
               </div>
 
               {/* Brand Filter */}
-              <div className="mb-6">
-                <h3 className="text-white font-semibold mb-3">Brand</h3>
+              <div className="mb-4 sm:mb-6">
+                <h3 className="text-white font-semibold mb-2 sm:mb-3 text-sm sm:text-base">Brand</h3>
                 <select
                   value={filters.brand}
                   onChange={(e) => handleFilterChange('brand', e.target.value)}
-                  className="w-full bg-gray-800 text-white px-3 py-2 rounded-lg border border-gray-700 focus:border-yellow-400 outline-none"
+                  className="w-full bg-gray-800 text-white px-3 py-2 rounded-lg border border-gray-700 focus:border-yellow-400 outline-none text-sm"
                 >
                   <option value="">All Brands</option>
                   {brands.map(brand => (
@@ -238,7 +238,7 @@ const Products: React.FC = () => {
               {/* Clear Filters */}
               <button
                 onClick={clearFilters}
-                className="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition-colors"
+                className="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition-colors text-sm"
               >
                 Clear All Filters
               </button>
@@ -248,21 +248,21 @@ const Products: React.FC = () => {
           {/* Products Grid */}
           <div className="flex-1">
             {filteredProducts.length === 0 ? (
-              <div className="text-center py-16">
-                <div className="text-6xl mb-4">🔍</div>
-                <h3 className="text-white text-xl font-semibold mb-2">No products found</h3>
-                <p className="text-gray-400 mb-4">
+              <div className="text-center py-12 sm:py-16">
+                <div className="text-4xl sm:text-6xl mb-4">🔍</div>
+                <h3 className="text-white text-lg sm:text-xl font-semibold mb-2">No products found</h3>
+                <p className="text-gray-400 mb-4 text-sm sm:text-base">
                   Try adjusting your filters or search terms
                 </p>
                 <button
                   onClick={clearFilters}
-                  className="bg-yellow-400 text-black px-6 py-2 rounded-lg font-medium hover:bg-yellow-500 transition-colors"
+                  className="bg-yellow-400 text-black px-4 sm:px-6 py-2 rounded-lg font-medium hover:bg-yellow-500 transition-colors text-sm sm:text-base"
                 >
                   Clear Filters
                 </button>
               </div>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
                 {filteredProducts.map((product, index) => (
                   <motion.div
                     key={product.id}
